@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://2hopobo0vlkh"]
+
+[ext_resource type="PackedScene" uid="uid://dth38xkfgmf5e" path="res://Scenes/player.tscn" id="2_8gbba"]
+[ext_resource type="Texture2D" uid="uid://vv2hconxowoh" path="res://Sprite/titlescreen.png" id="2_344ge"]
+[ext_resource type="Texture2D" uid="uid://cbxqp0l4x613n" path="res://Sprite/Sea.png" id="2_bo1nx"]
+[ext_resource type="Script" uid="uid://cywq5kp68rm5e" path="res://Scripts/ui.gd" id="2_ynf5e"]
+[ext_resource type="Script" uid="uid://cumxp5ym08ibb" path="res://Scripts/spawner.gd" id="3_8gbba"]
+[ext_resource type="Texture2D" uid="uid://dn5tpgyesqswc" path="res://Sprite/play.png" id="3_ynf5e"]
+[ext_resource type="PackedScene" uid="uid://bb1d8ioioltai" path="res://Scenes/fih.tscn" id="4_kry3j"]
+[ext_resource type="Texture2D" uid="uid://dk8a77co24c8g" path="res://Sprite/Gameover.png" id="5_6iyac"]
+[ext_resource type="PackedScene" uid="uid://bke578ifolrdj" path="res://Scenes/Shark.tscn" id="5_21xkr"]
+[ext_resource type="FontFile" uid="uid://c3xln733kjig" path="res://Minecraft.ttf" id="6_6iyac"]
+[ext_resource type="Texture2D" uid="uid://cg54okrcrrlhx" path="res://Sprite/reset.png" id="6_fdnlq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ynf5e"]
+font = ExtResource("6_6iyac")
+font_size = 60
+
+[node name="Main" type="Node2D" unique_id=332306913]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=2087819395]
+z_index = -1
+position = Vector2(960, -1)
+scale = Vector2(2, 2)
+texture = ExtResource("2_bo1nx")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1251307515 node_paths=PackedStringArray("start_screen", "game_over_screen", "size_label", "spawner_node", "play_button", "reset_button")]
+script = ExtResource("2_ynf5e")
+start_screen = NodePath("StartScreen")
+game_over_screen = NodePath("GameOverScreen")
+size_label = NodePath("HUD/SizeLabel")
+spawner_node = NodePath("../Spawner")
+play_button = NodePath("PlayButton")
+reset_button = NodePath("reset")
+
+[node name="StartScreen" type="TextureRect" parent="UI" unique_id=250667996]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("2_344ge")
+
+[node name="GameOverScreen" type="TextureRect" parent="UI" unique_id=217413800]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_6iyac")
+
+[node name="HUD" type="TextureRect" parent="UI" unique_id=450044922]
+offset_left = 367.0
+offset_top = 60.0
+offset_right = 691.0
+offset_bottom = 111.0
+
+[node name="SizeLabel" type="Label" parent="UI/HUD" unique_id=456118967]
+layout_mode = 0
+offset_right = 131.0
+offset_bottom = 60.0
+text = "Size:"
+label_settings = SubResource("LabelSettings_ynf5e")
+
+[node name="reset" type="Button" parent="UI" unique_id=1571704216]
+offset_left = 19.0
+offset_top = 16.0
+offset_right = 165.0
+offset_bottom = 151.0
+icon = ExtResource("6_fdnlq")
+flat = true
+
+[node name="PlayButton" type="Button" parent="UI" unique_id=1064115261]
+offset_left = 206.0
+offset_top = 593.0
+offset_right = 708.0
+offset_bottom = 872.0
+icon = ExtResource("3_ynf5e")
+flat = true
+
+[node name="Player" parent="." unique_id=1140533736 node_paths=PackedStringArray("ui_node") groups=["player"] instance=ExtResource("2_8gbba")]
+position = Vector2(960, 540)
+ui_node = NodePath("../UI")
+
+[node name="Spawner" type="Node2D" parent="." unique_id=1792423659 groups=["enemies"]]
+script = ExtResource("3_8gbba")
+fish_scene = ExtResource("4_kry3j")
+shark_scene = ExtResource("5_21xkr")
+
+[node name="Timer" type="Timer" parent="Spawner" unique_id=1014742858]
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=672008594]
+position = Vector2(960, 540)
+scale = Vector2(2, 2)
+
+[connection signal="pressed" from="UI/reset" to="UI" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UI/PlayButton" to="UI" method="_on_play_button_pressed"]
+[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dth38xkfgmf5e"]
+
+[ext_resource type="Script" uid="uid://c0n54fp40i7l1" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://0700h0fbbyqc" path="res://Sprite/PufferFish.png" id="1_v0iea"]
+
+[node name="Player" type="Area2D" unique_id=1101263891]
+collision_mask = 2
+script = ExtResource("1_cvnsp")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1840470223]
+texture = ExtResource("1_v0iea")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1153413481]
+visible = false
+polygon = PackedVector2Array(-5, -27, -5, -26, -8.400002, -26, -11, -23.400002, -11, -22.599998, -15, -20.599998, -24, -21, -29.5, -21, -32, -17.3, -32, -12.599998, -27.5, -7, -27, -5.5999985, -28.5, -4.9000015, -37.6, -14, -41.5, -14, -44.5, -10, -46, -10, -46, -6, -47, -6, -47, 10.5, -44, 12.5, -44, 14, -34.6, 14, -32.6, 12, -30.5, 12, -28.5, 9, -26, 12.300003, -26, 13.599998, -13, 19.599998, -13, 20.800003, 10.900002, 26, 23, 26, 23, 25, 29.400002, 25, 31.400002, 23, 33.4, 23, 41, 15.400002, 41, 14.599998, 46, 13, 48, 13, 48, 8.599998, 44.9, 5.5, 48, 2.4000015, 48, -0.40000153, 46.4, -2, 43.6, -2, 42.6, -4, 41.699997, -4, 40, -8.200001, 40, -11.400002, 34, -17.400002, 34, -18.7, 21, -23.7, 21, -24.900002, 13, -25.900002, 13, -27)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

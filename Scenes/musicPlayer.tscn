@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://sp53yedkwdg1"]
+
+[ext_resource type="AudioStream" uid="uid://ds6750nwj1s70" path="res://Music/Week 16 - Vacation Day CHILLOUT.ogg" id="1_lgn8y"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" unique_id=1559169751]
+process_mode = 3
+stream = ExtResource("1_lgn8y")
+autoplay = true
